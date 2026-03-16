@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Galeria de fotos de Roberto Castillo con recuerdos y momentos especiales en una sola pagina.">
+  <meta name="keywords" content="roberto castillo, galeria roberto castillo, fotos de roberto castillo, recuerdos roberto castillo">
+  <meta name="author" content="Roberto Castillo">
+  <meta property="og:title" content="Roberto Castillo Queralta - Galeria de Fotos">
+  <meta property="og:description" content="Galeria de fotos y recuerdos de Roberto Castillo.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Roberto Castillo Queralta - Galeria de Fotos">
+  <meta name="twitter:description" content="Galeria de fotos y recuerdos de Roberto Castillo.">
+  <title>Roberto Castillo Queralta - Galeria</title>
+  <style>
+    :root {
+      --bg: #f3efe7;
+      --surface: rgba(255, 252, 247, 0.8);
+      --card: #fffaf2;
+      --text: #1f1a17;
+      --muted: #6b625b;
+      --accent: #b85c38;
+      --shadow: 0 18px 45px rgba(49, 34, 23, 0.12);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(184, 92, 56, 0.18), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(138, 165, 136, 0.2), transparent 24%),
+        linear-gradient(180deg, #f8f3eb 0%, var(--bg) 100%);
+    }
+
+    .shell {
+      width: min(1200px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 48px;
+    }
+
+    .hero {
+      padding: 28px;
+      border-radius: calc(var(--radius) + 8px);
+      background: var(--surface);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 3.8vw, 4.4rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+
+    .intro {
+      margin: 0;
+      max-width: 700px;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(184, 92, 56, 0.1);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 28px;
+    }
+
+    .card {
+      display: block;
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      color: inherit;
+      text-decoration: none;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 55px rgba(49, 34, 23, 0.16);
+    }
+
+    .thumb {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      display: block;
+      background: #e5ddd0;
+    }
+
+    .caption {
+      padding: 14px 16px 18px;
+    }
+
+    .name {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 600;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    .hint {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.35;
+    }
+
+    .date {
+      display: block;
+      margin-top: 6px;
+      color: #7c726b;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .file {
+      display: block;
+      margin-top: 8px;
+      color: #8e8279;
+      font-size: 0.75rem;
+      word-break: break-word;
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        width: min(100% - 20px, 1200px);
+        padding-top: 20px;
+      }
+
+      .hero {
+        padding: 22px;
+      }
+
+      .gallery {
+        gap: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <h1>Roberto Castillo Galeria</h1>
+      <p class="intro">Recordando momentos especiales</p>
+      <div class="meta" id="photo-count">0 fotos</div>
+    </section>
+
+    <section class="gallery" id="gallery" aria-label="Galeria de fotos"></section>
+  </main>
+
+  <script src="photo-dates.js"></script>
+  <script src="photo-meta.js"></script>
+  <script>
+    const photos = [
+      "1631E35A-1884-48F6-8BDD-F6F65482CC46.JPG",
+      "171275416_774321063514549_1418735187083187175_n.jpg",
+      "20170203_20170203_165157.jpg",
+      "20170203_20170203_165250.jpg",
+      "20170214_20170214_140332.jpg",
+      "20180613_FB_IMG_1485891372197.jpg",
+      "20180613_FB_IMG_1485891644951.jpg",
+      "20180613_IMG-20170118-WA0003.jpg",
+      "20180613_IMG-20170129-WA0030.jpg",
+      "20180613_IMG-20170204-WA0005.jpg",
+      "20180613_IMG-20170318-WA0000.jpg",
+      "20180613_received_1764785420444595.jpeg",
+      "20180613_received_1808357519420718.jpeg",
+      "20180613_received_1820837154839421.jpeg",
+      "20180613_received_1820837158172754.jpeg",
+      "20180613_received_1820837161506087.jpeg",
+      "20180613_received_1830501673872969.jpeg",
+      "20180613_received_1839825372940599.jpeg",
+      "20180613_received_1840704606186009.jpeg",
+      "20180613_received_1843926075863862.jpeg",
+      "20180613_received_1843926822530454.jpeg",
+      "20180613_received_1843927229197080.jpeg",
+      "20180613_received_1843927255863744 (2).jpeg",
+      "20180613_received_1846119598977843.jpeg",
+      "20180613_received_1854346178155185.jpeg",
+      "20180613_received_1854346358155167 (2).jpeg",
+      "20180729_IMG_0507.JPG",
+      "20181023_IMG_0888.JPG",
+      "20181210_IMG_1327.JPG",
+      "20181231_IMG_1442.JPG",
+      "20220821_145622.jpg",
+      "628EDB70-EA3F-414B-B8C3-602543D82276.JPG",
+      "C6AF4C40-C048-4D99-956C-2F62854C6AE5.JPG",
+      "ChatGPT Image Mar 14, 2026 at 11_35_59 PM.png",
+      "D67EBAE3-AB51-44B7-BA29-792DCA1D8EA7.JPG",
+      "DSC_0002.JPG",
+      "DSC_0002_1 copy.JPG",
+      "DSC_0002_1.JPG",
+      "DSC_0003.JPG",
+      "DSC_0005 copy.JPG",
+      "DSC_0005.JPG",
+      "DSC_0017_1 copy.JPG",
+      "DSC_0017_1.JPG",
+      "DSC_0020.JPG",
+      "DSC_0060 copy.JPG",
+      "DSC_0060.JPG",
+      "E10A3844-BFA2-4115-917E-6DB46284E162.JPG",
+      "FB_IMG_1484840159272_Original.jpg",
+      "IMG_0021.jpg",
+      "IMG_0148.jpg",
+      "IMG_0546.JPG",
+      "IMG_0646.HEIC",
+      "IMG_0660.HEIC",
+      "IMG_0753.HEIC",
+      "IMG_0849.jpg",
+      "IMG_0911.jpg",
+      "IMG_0912.jpg",
+      "IMG_1012.jpg",
+      "IMG_20170120_195021.jpg",
+      "IMG_20170205_114540_Original.jpg",
+      "IMG_20170208_195155_Original.webp",
+      "IMG_20170323_191704_Original.webp",
+      "IMG_2026.jpg",
+      "IMG_2027.jpg",
+      "IMG_2028.jpg",
+      "IMG_2635.PNG",
+      "IMG_3182.HEIC",
+      "IMG_4453.JPG",
+      "IMG_4511.PNG",
+      "IMG_4517.PNG",
+      "IMG_9283.HEIC",
+      "IMG_9292.HEIC",
+      "Screenshot 2026-03-14 at 10.58.36 PM.png",
+      "received_1840704602852676_Original copy.jpeg",
+      "received_1840704602852676_Original.jpeg",
+      "received_1881194795470323_Original copy.jpeg",
+      "received_1881194795470323_Original.jpeg",
+      "received_399632817073251_Original copy.jpeg",
+      "received_399632817073251_Original.jpeg",
+      "received_439367943128698_Original.jpeg"
+    ];
+
+    const gallery = document.getElementById("gallery");
+    const photoCount = document.getElementById("photo-count");
+
+    const manualMeta = window.PHOTO_META || {};
+
+    function toTitleFromFileName(fileName) {
+      const withoutExt = fileName.replace(/\.[^.]+$/, "");
+      const clean = withoutExt
+        .replace(/copy/gi, "")
+        .replace(/[._-]+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+      if (!clean) {
+        return "Foto";
+      }
+
+      return clean
+        .split(" ")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(" ");
+    }
+
+    function getPhotoMeta(photo, index) {
+      const defaults = {
+        title: toTitleFromFileName(photo),
+        description: `Foto ${index + 1} de la galeria de Roberto Castillo.`,
+        date: ""
+      };
+
+      const custom = manualMeta[photo] || {};
+
+      return {
+        title: custom.title && custom.title.trim() ? custom.title : defaults.title,
+        description: custom.description && custom.description.trim() ? custom.description : defaults.description,
+        date: custom.date && custom.date.trim() ? custom.date : defaults.date
+      };
+    }
+
+    function formatPhotoDate(rawDate) {
+      if (!rawDate) {
+        return "Fecha no disponible";
+      }
+
+      const iso = rawDate.replace(" ", "T").replace(" +0000", "Z");
+      const date = new Date(iso);
+
+      if (Number.isNaN(date.getTime())) {
+        return rawDate;
+      }
+
+      return date.toLocaleDateString("es-ES", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
+    }
+
+    photoCount.textContent = `${photos.length} fotos`;
+
+    for (const [index, photo] of photos.entries()) {
+      const meta = getPhotoMeta(photo, index);
+      const rawDate = meta.date || ((window.PHOTO_DATES && window.PHOTO_DATES[photo]) || "");
+      const dateText = formatPhotoDate(rawDate);
+      const card = document.createElement("a");
+      const url = encodeURI(photo).replace(/#/g, "%23");
+
+      card.className = "card";
+      card.href = url;
+      card.target = "_blank";
+      card.rel = "noopener noreferrer";
+
+      const img = document.createElement("img");
+      img.className = "thumb";
+      img.src = url;
+      img.alt = `Roberto Castillo - ${meta.title}. ${meta.description}`;
+      img.loading = "lazy";
+
+      const caption = document.createElement("div");
+      caption.className = "caption";
+
+      const name = document.createElement("span");
+      name.className = "name";
+      name.textContent = meta.title;
+
+      const hint = document.createElement("span");
+      hint.className = "hint";
+      hint.textContent = meta.description;
+
+      const date = document.createElement("span");
+      date.className = "date";
+      date.textContent = `Fecha: ${dateText}`;
+
+      const file = document.createElement("span");
+      file.className = "file";
+      file.textContent = photo;
+
+      caption.append(name, hint, date, file);
+      card.append(img, caption);
+      gallery.append(card);
+    }
+  </script>
+</body>
+</html>
